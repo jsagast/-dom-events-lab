@@ -21,18 +21,27 @@ const handleOperation= (event)=>{
             operandB += value;
             screen.textContent = operandB;
         };
-    }else if (event.target.classList.contains('operator')){
-        if(operandA && operator!=='C'){
+    };
+    if (event.target.classList.contains('operator')){
+        if (operandA){
             operator=value;
             screen.textContent=operator;
         };
-        if(operator==='C'){
+   
+        if(value==='C'){
             operandA='';
             operandB='';
             operator='';
-            screen.textContent =operator ;
+            screen.textContent ='0' ;
+            return;
         };
-    }else if (value === '='){
+        if(operandA&&operandB){
+            operandA= calculation (Number(operandA), Number(operandB), operator).toString();
+            screen.textContent=operandA;
+            operandB='';
+        };
+
+        }else if (value === '='){
         if (operandA && operator && operandB){
         result= calculation (Number(operandA), Number(operandB), operator);
         screen.textContent = result.toString();
@@ -40,7 +49,7 @@ const handleOperation= (event)=>{
         operandB='';
         operator='';
         }
-    };
+         };
     function calculation (A,B,C){
         switch(C){
             case '+': return A+B;
